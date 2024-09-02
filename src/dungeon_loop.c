@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include "cute.h"
 
+#define CANVAS_WIDTH 240
+#define CANVAS_HEIGHT 176
+
 int main(int argc, char* argv[]) {
-  CF_Result result = cf_make_app("Dungeon Loop", cf_default_display(), 0, 0, 320, 240, CF_APP_OPTIONS_WINDOW_POS_CENTERED_BIT, argv[0]);
+  CF_Result result = cf_make_app("Dungeon Loop", cf_default_display(), 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, CF_APP_OPTIONS_WINDOW_POS_CENTERED_BIT, argv[0]);
   if(cf_is_error(result)) {
     printf("Error creating app: %s", result.details);
     return EXIT_FAILURE;
