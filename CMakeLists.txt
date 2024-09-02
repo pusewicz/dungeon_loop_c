@@ -45,7 +45,7 @@ add_executable(
 )
 
 # Our source code will be in the `src` folder.
-target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
+target_include_directories(${PROJECT_NAME} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src> PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
 # Support for web builds through the Emscripten compiler.
 if(EMSCRIPTEN)
