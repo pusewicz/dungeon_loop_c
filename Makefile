@@ -1,5 +1,3 @@
-# Makefile for GameProject
-
 # Default build type
 BUILD_TYPE ?= Debug
 
@@ -15,8 +13,7 @@ all: build
 # Create build directory and run CMake
 $(BUILD_DIR)/build.ninja:
 	mkdir -p $(BUILD_DIR)
-	cmake -B $(BUILD_DIR) -G $(CMAKE_GENERATOR) \
-		-DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
+	cmake -B $(BUILD_DIR) -G $(CMAKE_GENERATOR) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
 
 # Build the project
 build: $(BUILD_DIR)/build.ninja
