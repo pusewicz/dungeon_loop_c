@@ -12,7 +12,6 @@ int main(int argc, char* argv[]) {
   cf_sprite_play(&girl, "spin");
   cf_sprite_set_scale(&girl, cf_v2(4,4));
 
-
   while(cf_app_is_running()) {
     cf_app_update(NULL);
     cf_sprite_update(&girl);
