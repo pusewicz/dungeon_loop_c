@@ -2,8 +2,9 @@
 #include "cute_app.h"
 #include "cute_draw.h"
 #include "dungeon_loop/common.h"
+#include "dungeon_loop/game_state.h"
+#include "dungeon_loop/input.h"
 #include "dungeon_loop/math.h"
-#include "dungeon_loop/state.h"
 #include <stdio.h>
 
 int main(int argc, char* argv[])
@@ -20,15 +21,16 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
+  GameState* state = create_game_state();
   CF_Sprite girl = cf_make_demo_sprite();
   cf_sprite_play(&girl, "spin");
 
   while (cf_app_is_running()) {
     cf_app_update(NULL);
 
-    handle_input();
+    handle_input(state);
 
-    girl.transform.p = g_state.player_pos;
+    girl.transform.p = state->player_pos;
     cf_sprite_update(&girl);
     cf_draw_scale_v2(cf_v2(scale, scale));
     cf_sprite_draw(&girl);

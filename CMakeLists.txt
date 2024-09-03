@@ -35,8 +35,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(cute)
 
 # Sources
-set(SOURCES src/dungeon_loop.c src/dungeon_loop/game_state.c
-            src/dungeon_loop/input.c)
+set(SOURCES src/main.c src/dungeon_loop/game_state.c src/dungeon_loop/input.c)
 
 # Source code for your game.
 add_executable(${PROJECT_NAME} ${SOURCES})
