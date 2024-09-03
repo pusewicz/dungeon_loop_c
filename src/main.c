@@ -6,7 +6,6 @@
 #include "dungeon_loop/game.h"
 #include "dungeon_loop/game_state.h"
 #include "dungeon_loop/input.h"
-#include "dungeon_loop/math.h"
 #include <stdio.h>
 
 void update(void* udata)
@@ -21,7 +20,7 @@ int main(int argc, char* argv[])
   CF_UNUSED(argc);
   CF_DisplayID display_id = cf_default_display();
   CF_Rect display_size = cf_display_bounds(display_id);
-  int scale = min(display_size.w / CANVAS_WIDTH, display_size.h / CANVAS_HEIGHT) - 1;
+  int scale = cf_min(display_size.w / CANVAS_WIDTH, display_size.h / CANVAS_HEIGHT) - 1;
 
   CF_Result result = cf_make_app("Dungeon Loop", display_id, 0, 0, CANVAS_WIDTH * scale, CANVAS_HEIGHT * scale,
                                  CF_APP_OPTIONS_WINDOW_POS_CENTERED_BIT, argv[0]);
