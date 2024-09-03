@@ -32,6 +32,7 @@ int main(int argc, char* argv[])
   GameState state;
   init_game_state(&state);
   cf_set_update_udata(&state);
+  cf_app_set_vsync(true);
 
   CF_Sprite girl = cf_make_demo_sprite();
   cf_sprite_play(&girl, "spin");
