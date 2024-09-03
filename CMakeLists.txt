@@ -34,8 +34,9 @@ FetchContent_Declare(
   GIT_SHALLOW)
 FetchContent_MakeAvailable(cute)
 
-# Glob sources
-file(GLOB_RECURSE SOURCES src/*.c src/*.cpp src/*.h src/*.hpp)
+# Sources
+set(SOURCES src/dungeon_loop.c src/dungeon_loop/game_state.c
+            src/dungeon_loop/input.c)
 
 # Source code for your game.
 add_executable(${PROJECT_NAME} ${SOURCES})
