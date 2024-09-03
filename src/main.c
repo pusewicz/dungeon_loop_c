@@ -1,5 +1,6 @@
 #include "cute.h"
 #include "cute_app.h"
+#include "cute_defines.h"
 #include "cute_draw.h"
 #include "dungeon_loop/common.h"
 #include "dungeon_loop/game.h"
@@ -17,6 +18,7 @@ void update(void* udata)
 
 int main(int argc, char* argv[])
 {
+  CF_UNUSED(argc);
   CF_DisplayID display_id = cf_default_display();
   CF_Rect display_size = cf_display_bounds(display_id);
   int scale = min(display_size.w / CANVAS_WIDTH, display_size.h / CANVAS_HEIGHT) - 1;
