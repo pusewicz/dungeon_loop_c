@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.30)
 
 project(
- dungeon_loop
- VERSION 0.0.1
- LANGUAGES C CXX
-)
+  dungeon_loop
+  VERSION 0.0.1
+  LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_CXX_STANDARD 20)
@@ -25,53 +24,64 @@ set(CF_FRAMEWORK_BUILD_SAMPLES OFF)
 # Disable building CF tests by default
 set(CF_FRAMEWORK_BUILD_TESTS OFF)
 
-# This will download and build Cute Framework just once the first time you build your game.
+# This will download and build Cute Framework just once the first time you build
+# your game.
 include(FetchContent)
 FetchContent_Declare(
- cute
- GIT_REPOSITORY https://github.com/RandyGaul/cute_framework
- GIT_TAG master
- GIT_SHALLOW
-)
+  cute
+  GIT_REPOSITORY https://github.com/RandyGaul/cute_framework
+  GIT_TAG master
+  GIT_SHALLOW)
 FetchContent_MakeAvailable(cute)
 
 # Glob sources
 file(GLOB_RECURSE SOURCES src/*.c src/*.cpp src/*.h src/*.hpp)
 
 # Source code for your game.
-add_executable(
- ${PROJECT_NAME}
- ${SOURCES}
-)
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Our source code will be in the `src` folder.
-target_include_directories(${PROJECT_NAME} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src> PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_include_directories(
+  ${PROJECT_NAME}
+  PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+  PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
 # Support for web builds through the Emscripten compiler.
 if(EMSCRIPTEN)
   set(CMAKE_EXECUTABLE_SUFFIX ".html")
   target_compile_options(${PROJECT_NAME} PUBLIC -O1 -fno-rtti -fno-exceptions)
-  target_link_options(${PROJECT_NAME} PRIVATE -o ${PROJECT_NAME}.html --preload-file ${CMAKE_SOURCE_DIR}/content@/content --emrun -s ASYNCIFY=1 -O1)
+  target_link_options(
+    ${PROJECT_NAME}
+    PRIVATE
+    -o
+    ${PROJECT_NAME}.html
+    --preload-file
+    ${CMAKE_SOURCE_DIR}/content@/content
+    --emrun
+    -s
+    ASYNCIFY=1
+    -O1)
 endif()
 
-# Some basic information needed for CMake to generate your Info.plist file.
-# This is necessary for e.g. iOS builds.
+# Some basic information needed for CMake to generate your Info.plist file. This
+# is necessary for e.g. iOS builds.
 if(APPLE)
   set_target_properties(
-  ${PROJECT_NAME}
-  PROPERTIES
-  MACOSX_BUNDLE_GUI_IDENTIFIER "com.layer22.${PROJECT_NAME}"
-  MACOSX_BUNDLE_BUNDLE_VERSION "1.0.0"
-  MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0.0"
- )
+    ${PROJECT_NAME}
+    PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER "com.layer22.${PROJECT_NAME}"
+               MACOSX_BUNDLE_BUNDLE_VERSION "1.0.0"
+               MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0.0")
 endif()
 
 # Make the game link against Cute Framework.
 target_link_libraries(${PROJECT_NAME} cute)
 
-# For convenience on Windows, set MSVC debugger's working directory in the build folder.
-# Also ask MSVC to make the game the startup project.
-if (MSVC)
-  set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-  set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+# For convenience on Windows, set MSVC debugger's working directory in the build
+# folder. Also ask MSVC to make the game the startup project.
+if(MSVC)
+  set_property(
+    TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY
+                                    $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+  set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT
+                                                              ${PROJECT_NAME})
 endif()
