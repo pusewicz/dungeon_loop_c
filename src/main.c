@@ -21,7 +21,6 @@ int main(int argc, char* argv[])
   CF_DisplayID display_id = cf_default_display();
   CF_Rect display_size = cf_display_bounds(display_id);
   int scale = cf_min(display_size.w / CANVAS_WIDTH, display_size.h / CANVAS_HEIGHT) - 1;
-
   CF_Result result = cf_make_app("Dungeon Loop", display_id, 0, 0, CANVAS_WIDTH * scale, CANVAS_HEIGHT * scale,
                                  CF_APP_OPTIONS_WINDOW_POS_CENTERED_BIT, argv[0]);
 
@@ -30,8 +29,8 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  GameState state = {.scale = scale};
-  init_game_state(&state);
+  GameState state = {0};
+  init_game_state(&state, scale);
   cf_set_update_udata(&state);
   cf_app_set_vsync(true);
   cf_app_init_imgui();

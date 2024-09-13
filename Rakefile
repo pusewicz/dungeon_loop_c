@@ -7,6 +7,7 @@ SRC_DIR = File.join(ROOT_DIR, "src")
 BUILD_DIR = File.join(ROOT_DIR, "build")
 DEPS_DIR = File.join(ROOT_DIR, "deps")
 CUTE_DIR = File.join(DEPS_DIR, "cute")
+ASSETS_DIR = File.join(ROOT_DIR, "assets")
 
 SRC_FILES = FileList["#{SRC_DIR}/**/*.c"]
 OBJ_FILES = SRC_FILES.pathmap("%{#{SRC_DIR},#{BUILD_DIR}}X.o")
@@ -88,6 +89,11 @@ rule '.o' => [->(f){source_for_object(f)}] do |t|
   sh cmd.join(' ')
 end
 
+# Copy assets to build directory task
+task assets: [BUILD_DIR] do
+  cp_r ASSETS_DIR, BUILD_DIR
+end
+
 file CUTE_DIR => DEPS_DIR do
   unless Dir.exist?(CUTE_DIR)
     sh "git clone https://github.com/RandyGaul/cute_framework.git --depth=1 --branch=#{CUTE_BRANCH} #{CUTE_DIR}"
@@ -128,7 +134,7 @@ file COMPILE_COMMANDS_JSON => [TARGET] do
 end
 
 task compile: [BUILD_DIR, CUTE_DIR, TARGET, COMPILE_COMMANDS_JSON]
-task run: :compile do
+task run: [:compile, :assets] do
   sh TARGET
 end
 
