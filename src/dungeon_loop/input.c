@@ -1,6 +1,6 @@
+#include <cute.h>
 #include <dungeon_loop/common.h>
 #include <dungeon_loop/game_state.h>
-#include <cute.h>
 
 void handle_input(GameState* state)
 {

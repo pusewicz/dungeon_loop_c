@@ -2,3 +2,5 @@
 /.cache
 /.zed
 /deps
+imgui.ini
+compile_commands.json

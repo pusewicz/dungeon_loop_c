@@ -3,6 +3,12 @@
 
 void game_update(GameState* state)
 {
-  CF_UNUSED(state);
-  // Update the game state
+  state->girl.transform.p = state->player_pos;
+  cf_sprite_update(&state->girl);
+}
+
+void game_draw(GameState* state)
+{
+  cf_draw_scale_v2(cf_v2(state->scale, state->scale));
+  cf_sprite_draw(&state->girl);
 }
