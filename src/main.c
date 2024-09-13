@@ -1,12 +1,11 @@
-#include "cute.h"
-#include "cute_app.h"
-#include "cute_defines.h"
-#include "cute_draw.h"
-#include "dungeon_loop/common.h"
-#include "dungeon_loop/game.h"
-#include "dungeon_loop/game_state.h"
-#include "dungeon_loop/input.h"
+#include <cimgui.h>
+#include <cute.h>
+#include <dungeon_loop/common.h>
+#include <dungeon_loop/game.h>
+#include <dungeon_loop/game_state.h>
+#include <dungeon_loop/input.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void update(void* udata)
 {
@@ -34,6 +33,7 @@ int main(int argc, char* argv[])
   init_game_state(&state);
   cf_set_update_udata(&state);
   cf_app_set_vsync(true);
+  cf_app_init_imgui();
 
   CF_Sprite girl = cf_make_demo_sprite();
   cf_sprite_play(&girl, "spin");
@@ -45,6 +45,9 @@ int main(int argc, char* argv[])
     cf_sprite_update(&girl);
     cf_draw_scale_v2(cf_v2(scale, scale));
     cf_sprite_draw(&girl);
+
+    igBegin("Hello", NULL, 0);
+    igEnd();
     cf_app_draw_onto_screen(true);
   }
 

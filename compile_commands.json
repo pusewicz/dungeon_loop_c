@@ -1,0 +1,24 @@
+[
+  {
+    "directory": "/Users/piotr/Work/GitHub/dungeon_loop_c/build",
+    "arguments": [
+      "/usr/bin/clang",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-g3",
+      "-std=c17",
+      "-I/Users/piotr/Work/GitHub/dungeon_loop_c/src",
+      "-I/Users/piotr/Work/GitHub/dungeon_loop_c/include",
+      "-I/Users/piotr/Work/GitHub/dungeon_loop_c/deps/cute/include",
+      "-I/Users/piotr/Work/GitHub/dungeon_loop_c/deps/cute/libraries",
+      "-I/Users/piotr/Work/GitHub/dungeon_loop_c/deps/cute/libraries/cimgui",
+      "-c",
+      "/Users/piotr/Work/GitHub/dungeon_loop_c/src/main.c",
+      "-o",
+      "/Users/piotr/Work/GitHub/dungeon_loop_c/build/main.o"
+    ],
+    "file": "/Users/piotr/Work/GitHub/dungeon_loop_c/src/main.c",
+    "output": "/Users/piotr/Work/GitHub/dungeon_loop_c/build/main.o"
+  }
+]
