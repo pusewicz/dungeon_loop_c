@@ -2,4 +2,4 @@
 
 # Run
 
-  $ rake run
+    rake run
