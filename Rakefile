@@ -27,14 +27,14 @@ CFLAGS = %w[
   -g3
   -std=c17
 ]
-EXECUTABLE = File.join(BUILD_DIR, PROJECT_NAME)
+TARGET = File.join(BUILD_DIR, PROJECT_NAME)
 LIBS = %w[
   m
   pthread
   c++
   objc
 ]
-COMPILE_COMMANDS = []
+COMPILE_COMMANDS_JSON = File.join(ROOT_DIR, "compile_commands.json")
 APPLE_FRAMEWORKS = %w[
   AVFoundation
   AudioToolbox
@@ -59,8 +59,10 @@ directory BUILD_DIR
 directory DEPS_DIR
 
 CLEAN.include(OBJ_FILES)
-CLEAN.include(EXECUTABLE)
+CLEAN.include(TARGET)
 CLOBBER.include(BUILD_DIR)
+
+compile_commands = []
 
 def source_for_object(obj_file)
   obj_file.pathmap("%{#{BUILD_DIR},#{SRC_DIR}}X.c")
@@ -77,7 +79,7 @@ rule '.o' => [->(f){source_for_object(f)}] do |t|
     "-o",
     t.name,
   ]
-  COMPILE_COMMANDS << {
+  compile_commands << {
     directory: BUILD_DIR,
     arguments: cmd,
     file: t.source,
@@ -104,7 +106,7 @@ file CUTE_DIR => DEPS_DIR do
   end
 end
 
-file EXECUTABLE => OBJ_FILES do
+file TARGET => OBJ_FILES do
   static_libs = FileList["#{BUILD_DIR}/**/*.a"] + FileList["#{DEPS_DIR}/**/*.a"]
   cmd = [
     CC,
@@ -115,19 +117,19 @@ file EXECUTABLE => OBJ_FILES do
     *static_libs.map { "-Xlinker #{_1}" },
     *OBJ_FILES,
     "-o",
-    EXECUTABLE,
+    TARGET,
   ]
   sh cmd.join(' ')
 end
 
-file "compile_commands.json" => [EXECUTABLE] do
+file COMPILE_COMMANDS_JSON => [TARGET] do
   puts "Writing compile_commands.json"
-  File.write("compile_commands.json", JSON.pretty_generate(COMPILE_COMMANDS))
+  File.write(COMPILE_COMMANDS_JSON, JSON.pretty_generate(compile_commands))
 end
 
-task compile: [BUILD_DIR, CUTE_DIR, EXECUTABLE, "compile_commands.json"]
+task compile: [BUILD_DIR, CUTE_DIR, TARGET, COMPILE_COMMANDS_JSON]
 task run: :compile do
-  sh EXECUTABLE
+  sh TARGET
 end
 
 task default: :compile
